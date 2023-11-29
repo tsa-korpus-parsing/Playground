@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Множественный выбор с повторениями</title>
+  <style>
+    .selected-items {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-height: 20px;
+    }
+    .selected-items span {
+      display: inline-block;
+      padding: 5px;
+      margin-right: 5px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Множественный выбор с повторениями</h1>
+  <div class="selected-items" id="selectedItems"></div>
+  <input type="text" id="search" placeholder="Поиск...">
+  <select multiple id="dropdown">
+    <option value="опция 1">Опция 1</option>
+    <option value="опция 2">Опция 2</option>
+    <option value="опция 3">Опция 3</option>
+    <option value="опция 4">Опция 4</option>
+    <option value="опция 5">Опция 5</option>
+    <option value="опция 6">Опция 6</option>
+    <option value="опция 7">Опция 7</option>
+    <option value="опция 8">Опция 8</option>
+  </select>
+
+
+
+  <script>
+    var selectedItems = document.getElementById('selectedItems');
+    document.getElementById('search').addEventListener('input', function() {
+      var searchValue = this.value.toLowerCase();
+      var dropdown = document.getElementById('dropdown');
+      var options = dropdown.options;
+  
+      for (var i = 0; i < options.length; i++) {
+        var optionValue = options[i].value.toLowerCase();
+        options[i].hidden = optionValue.indexOf(searchValue) === -1;
+      }
+    });
+  
+    document.getElementById('dropdown').addEventListener('change', function() {
+      var selectedOptions = this.selectedOptions;
+  
+      for (var i = 0; i < selectedOptions.length; i++) {
+        var optionValue = selectedOptions[i].value;
+        var item = document.createElement('span');
+        item.textContent = optionValue;
+        item.addEventListener('click', removeItem);
+  
+        selectedItems.appendChild(item);
+      }
+  
+      this.selectedIndex = -1;
+    });
+  
+    function removeItem() {
+      this.parentNode.removeChild(this);
+    }
+  </script>
+</body>
+
+</html>
